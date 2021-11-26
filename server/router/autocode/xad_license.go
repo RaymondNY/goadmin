@@ -23,5 +23,6 @@ func (s *XadLicenseRouter) InitXadLicenseRouter(Router *gin.RouterGroup) {
 	{
 		xadLicenseRouterWithoutRecord.GET("findXadLicense", xadLicenseApi.FindXadLicense)       // 根据ID获取XadLicense
 		xadLicenseRouterWithoutRecord.GET("getXadLicenseList", xadLicenseApi.GetXadLicenseList) // 获取XadLicense列表
+		xadLicenseRouterWithoutRecord.GET("getMachineCode", xadLicenseApi.GetMachineCode)
 	}
 }

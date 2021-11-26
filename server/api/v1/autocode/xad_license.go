@@ -140,3 +140,6 @@ func (xadLicenseApi *XadLicenseApi) GetXadLicenseList(c *gin.Context) {
 		}, "获取成功", c)
 	}
 }
+func (xadLicenseApi *XadLicenseApi) GetMachineCode(c *gin.Context) {
+	response.OkWithMessage("oooooooo", c)
+}
