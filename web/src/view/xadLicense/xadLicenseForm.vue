@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="gva-form-box">
-      <el-form :model="formData" label-position="right" label-width="80px">
+      <el-form :model="formData" label-position="right" label-width="100px">
         <el-form-item label="客户编号:">
           <el-input v-model.number="formData.customerId" clearable placeholder="请输入" />
         </el-form-item>
@@ -11,7 +11,7 @@
         <el-form-item label="创建人:">
           <el-input v-model="formData.createUser" clearable placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="license地址:">
+        <el-form-item label="授权文件地址:">
           <el-input v-model="formData.licenseUrl" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="公钥地址:">
@@ -20,9 +20,23 @@
         <el-form-item label="私钥地址:">
           <el-input v-model="formData.privateKey" clearable placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="机器码:">
-          <el-input v-model="formData.machineCode" clearable placeholder="请输入" />
-        </el-form-item>
+
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item label="机器码:">
+              <el-input v-model="formData.machineCode" clearable placeholder="请输入" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="输入请求">
+              <el-input v-model="testurl" clearable placeholder="请输入" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="2">
+            <el-button type="primary" @click="test">Primary</el-button>
+          </el-col>
+        </el-row>
+
         <el-form-item>
           <el-button size="mini" type="primary" @click="save">保存</el-button>
           <el-button size="mini" type="primary" @click="back">返回</el-button>
@@ -33,11 +47,7 @@
 </template>
 
 <script>
-import {
-  createXadLicense,
-  updateXadLicense,
-  findXadLicense
-} from '@/api/xadLicense' //  此处请自行替换地址
+import { createXadLicense, updateXadLicense, findXadLicense, getMachineCode } from '@/api/xadLicense' //  此处请自行替换地址
 import infoList from '@/mixins/infoList'
 export default {
   name: 'XadLicense',
@@ -53,7 +63,8 @@ export default {
         publicKey: '',
         privateKey: '',
         machineCode: '',
-      }
+      },
+      testurl: '11',
     }
   },
   async created() {
@@ -85,16 +96,19 @@ export default {
       if (res.code === 0) {
         this.$message({
           type: 'success',
-          message: '创建/更改成功'
+          message: '创建/更改成功',
         })
       }
     },
     back() {
       this.$router.go(-1)
-    }
-  }
+    },
+    test() {
+      let res = getMachineCode()
+      console.log(res)
+    },
+  },
 }
 </script>
 
-<style>
-</style>
+<style></style>

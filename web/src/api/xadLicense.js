@@ -12,7 +12,7 @@ export const createXadLicense = (data) => {
   return service({
     url: '/xadLicense/createXadLicense',
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -28,7 +28,7 @@ export const deleteXadLicense = (data) => {
   return service({
     url: '/xadLicense/deleteXadLicense',
     method: 'delete',
-    data
+    data,
   })
 }
 
@@ -44,7 +44,7 @@ export const deleteXadLicenseByIds = (data) => {
   return service({
     url: '/xadLicense/deleteXadLicenseByIds',
     method: 'delete',
-    data
+    data,
   })
 }
 
@@ -60,7 +60,7 @@ export const updateXadLicense = (data) => {
   return service({
     url: '/xadLicense/updateXadLicense',
     method: 'put',
-    data
+    data,
   })
 }
 
@@ -76,7 +76,7 @@ export const findXadLicense = (params) => {
   return service({
     url: '/xadLicense/findXadLicense',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -92,6 +92,14 @@ export const getXadLicenseList = (params) => {
   return service({
     url: '/xadLicense/getXadLicenseList',
     method: 'get',
-    params
+    params,
+  })
+}
+
+export const getMachineCode = (params) => {
+  return service({
+    url: '/xadLicense/getMachineCode',
+    method: 'get',
+    params,
   })
 }
