@@ -1,6 +1,7 @@
 package autocode
 
 import (
+	"fmt"
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/autocode"
 	autocodeReq "github.com/flipped-aurora/gin-vue-admin/server/model/autocode/request"
@@ -9,6 +10,8 @@ import (
 	"github.com/flipped-aurora/gin-vue-admin/server/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"io/ioutil"
+	"net/http"
 )
 
 type XadLicenseApi struct {
@@ -141,5 +144,14 @@ func (xadLicenseApi *XadLicenseApi) GetXadLicenseList(c *gin.Context) {
 	}
 }
 func (xadLicenseApi *XadLicenseApi) GetMachineCode(c *gin.Context) {
-	response.OkWithMessage("oooooooo", c)
+	res, err := http.Get("http://192.168.1.117:9995/getCalculate")
+	if err != nil || res.StatusCode != http.StatusOK {
+		fmt.Println(err.Error())
+	} else {
+		body, _ := ioutil.ReadAll(res.Body) // 读取响应 body, 返回为 []byte
+		t := string(body)
+		fmt.Println(t) // 转成字符串看一下结果
+		response.OkWithMessage(t, c)
+	}
+
 }

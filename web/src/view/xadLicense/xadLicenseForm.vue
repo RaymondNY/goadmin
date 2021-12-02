@@ -103,9 +103,12 @@ export default {
     back() {
       this.$router.go(-1)
     },
-    test() {
-      let res = getMachineCode()
-      console.log(res)
+    async test() {
+      console.log(this.$data.testurl)
+      let res1 = await getMachineCode()
+      const d = JSON.parse(res1.msg)
+      this.$data.formData.machineCode = d.value
+      console.log(d.value)
     },
   },
 }
