@@ -11,6 +11,7 @@ type XadLicense struct {
 	global.GVA_MODEL
 	CustomerId  *int   `json:"customerId" form:"customerId" gorm:"column:customer_id;comment:客户编号;type:int"`
 	ProductId   *int   `json:"productId" form:"productId" gorm:"column:product_id;comment:产品编号;type:int"`
+	TemplateId  *int   `json:"templateId" form:"templateId" gorm:"column:template_id;comment:模板编号;type:int"`
 	CreateUser  string `json:"createUser" form:"createUser" gorm:"column:create_user;comment:;type:varchar(191);"`
 	LicenseUrl  string `json:"licenseUrl" form:"licenseUrl" gorm:"column:license_url;comment:license地址;type:varchar(255);"`
 	PublicKey   string `json:"publicKey" form:"publicKey" gorm:"column:public_key;comment:公钥地址;type:varchar(255);"`

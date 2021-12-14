@@ -2,18 +2,20 @@ package main
 
 import (
 	"database/sql"
-	"gorm.io/driver/mysql"
+	"github.com/flipped-aurora/gin-vue-admin/server/service/autocode"
 	"gorm.io/gorm"
 	"time"
 )
 
 func main() {
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
-	dsn := "root:root@tcp(127.0.0.1:3306)/gorm?charset=utf8mb4&parseTime=True&loc=Local"
-	db, _ := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	db.AutoMigrate(&User{})
-	user := User{Name: "Jinzhu", Age: 18}
-	db.Create(&user)
+
+	autocode.GenerateRSA("1")
+	//dsn := "root:root@tcp(127.0.0.1:3306)/gorm?charset=utf8mb4&parseTime=True&loc=Local"
+	//db, _ := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	//db.AutoMigrate(&User{})
+	//user := User{Name: "Jinzhu", Age: 18}
+	//db.Create(&user)
 }
 
 type User struct {

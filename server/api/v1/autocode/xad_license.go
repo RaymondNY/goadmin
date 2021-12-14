@@ -30,11 +30,13 @@ var xadLicenseService = service.ServiceGroupApp.AutoCodeServiceGroup.XadLicenseS
 // @Router /xadLicense/createXadLicense [post]
 func (xadLicenseApi *XadLicenseApi) CreateXadLicense(c *gin.Context) {
 	var xadLicense autocode.XadLicense
+	ip := c.Query("testurl")
 	_ = c.ShouldBindJSON(&xadLicense)
-	if err := xadLicenseService.CreateXadLicense(xadLicense); err != nil {
+	if err := xadLicenseService.CreateXadLicense(&xadLicense, ip); err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {
+		fmt.Println(xadLicense.ID)
 		response.OkWithMessage("创建成功", c)
 	}
 }
@@ -144,9 +146,13 @@ func (xadLicenseApi *XadLicenseApi) GetXadLicenseList(c *gin.Context) {
 	}
 }
 func (xadLicenseApi *XadLicenseApi) GetMachineCode(c *gin.Context) {
-	res, err := http.Get("http://192.168.1.117:9995/getCalculate")
+	a := c.Query("test")
+	fmt.Println(a)
+	res, err := http.Get("http://" + a + ":9995/getCalculate")
 	if err != nil || res.StatusCode != http.StatusOK {
-		fmt.Println(err.Error())
+		fmt.Println(33333)
+		response.FailWithMessage(err.Error(), c)
+		fmt.Println(44444)
 	} else {
 		body, _ := ioutil.ReadAll(res.Body) // 读取响应 body, 返回为 []byte
 		t := string(body)
