@@ -15,56 +15,69 @@
       </el-form>
     </div>
     <div class="gva-table-box">
-        <div class="gva-btn-list">
-            <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog">新增</el-button>
-            <el-popover v-model:visible="deleteVisible" placement="top" width="160">
-            <p>确定要删除吗？</p>
-            <div style="text-align: right; margin-top: 8px;">
-                <el-button size="mini" type="text" @click="deleteVisible = false">取消</el-button>
-                <el-button size="mini" type="primary" @click="onDelete">确定</el-button>
-            </div>
-            <template #reference>
-                <el-button icon="el-icon-delete" size="mini" style="margin-left: 10px;" :disabled="!multipleSelection.length">删除</el-button>
-            </template>
-            </el-popover>
-        </div>
-        <el-table
+      <div class="gva-btn-list">
+        <el-button size="mini" type="primary" icon="el-icon-plus" @click="openDialog">新增</el-button>
+        <el-popover v-model:visible="deleteVisible" placement="top" width="160">
+          <p>确定要删除吗？</p>
+          <div style="text-align: right; margin-top: 8px;">
+            <el-button size="mini" type="text" @click="deleteVisible = false">取消</el-button>
+            <el-button size="mini" type="primary" @click="onDelete">确定</el-button>
+          </div>
+          <template #reference>
+            <el-button
+              icon="el-icon-delete"
+              size="mini"
+              style="margin-left: 10px;"
+              :disabled="!multipleSelection.length"
+              >删除</el-button
+            >
+          </template>
+        </el-popover>
+      </div>
+      <el-table
         ref="multipleTable"
         style="width: 100%"
         tooltip-effect="dark"
         :data="tableData"
         row-key="ID"
         @selection-change="handleSelectionChange"
-        >
+      >
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="日期" width="180">
-            <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
+          <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>
-        <el-table-column align="left" label="客户编号" prop="customerId" width="120" />
-        <el-table-column align="left" label="产品编号" prop="productId" width="120" />
-        <el-table-column align="left" label="创建人" prop="createUser" width="120" />
-        <el-table-column align="left" label="license地址" prop="licenseUrl" width="120" />
-        <el-table-column align="left" label="公钥地址" prop="publicKey" width="120" />
-        <el-table-column align="left" label="私钥地址" prop="privateKey" width="120" />
-        <el-table-column align="left" label="机器码" prop="machineCode" width="120" />
-        <el-table-column align="left" label="按钮组">
-            <template #default="scope">
-            <el-button type="text" icon="el-icon-edit" size="small" class="table-button" @click="updateXadLicense(scope.row)">变更</el-button>
+        <el-table-column align="left" label="客户编号" prop="customerId" width="100" />
+        <el-table-column align="left" label="产品编号" prop="productId" width="100" />
+        <el-table-column align="left" label="创建人" prop="createUser" width=" 100" />
+        <el-table-column align="left" label="license地址" prop="licenseUrl" width="200" show-overflow-tooltip="true" />
+        <el-table-column align="left" label="公钥地址" prop="publicKey" width="200" show-overflow-tooltip="true" />
+        <el-table-column align="left" label="私钥地址" prop="privateKey" width="200" show-overflow-tooltip="true" />
+        <el-table-column align="left" label="机器码" prop="machineCode" width="200" show-overflow-tooltip="true" />
+        <el-table-column align="left" label="按钮组" width="200">
+          <template #default="scope">
+            <el-button
+              type="text"
+              icon="el-icon-edit"
+              size="small"
+              class="table-button"
+              @click="updateXadLicense(scope.row)"
+              >变更</el-button
+            >
             <el-button type="text" icon="el-icon-delete" size="mini" @click="deleteRow(scope.row)">删除</el-button>
-            </template>
+          </template>
         </el-table-column>
-        </el-table>
-        <div class="gva-pagination">
-            <el-pagination
-            layout="total, sizes, prev, pager, next, jumper"
-            :current-page="page"
-            :page-size="pageSize"
-            :page-sizes="[10, 30, 50, 100]"
-            :total="total"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-            />
-        </div>
+      </el-table>
+      <div class="gva-pagination">
+        <el-pagination
+          layout="total, sizes, prev, pager, next, jumper"
+          :current-page="page"
+          :page-size="pageSize"
+          :page-sizes="[10, 30, 50, 100]"
+          :total="total"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
+        />
+      </div>
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="弹窗操作">
       <el-form :model="formData" label-position="right" label-width="80px">
@@ -87,7 +100,7 @@
           <el-input v-model="formData.privateKey" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="机器码:">
-          <el-input v-model="formData.machineCode" clearable placeholder="请输入" />
+          <el-input v-model="formData.machineCode" clearable placeholder="请输入" readonly="true" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -107,7 +120,7 @@ import {
   deleteXadLicenseByIds,
   updateXadLicense,
   findXadLicense,
-  getXadLicenseList
+  getXadLicenseList,
 } from '@/api/xadLicense' //  此处请自行替换地址
 import infoList from '@/mixins/infoList'
 export default {
@@ -128,17 +141,17 @@ export default {
         publicKey: '',
         privateKey: '',
         machineCode: '',
-      }
+      },
     }
   },
   async created() {
     await this.getTableData()
   },
   methods: {
-  onReset() {
-    this.searchInfo = {}
-  },
-  // 条件搜索前端看此方法
+    onReset() {
+      this.searchInfo = {}
+    },
+    // 条件搜索前端看此方法
     onSubmit() {
       this.page = 1
       this.pageSize = 10
@@ -151,7 +164,7 @@ export default {
       this.$confirm('确定要删除吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       }).then(() => {
         this.deleteXadLicense(row)
       })
@@ -161,19 +174,19 @@ export default {
       if (this.multipleSelection.length === 0) {
         this.$message({
           type: 'warning',
-          message: '请选择要删除的数据'
+          message: '请选择要删除的数据',
         })
         return
       }
       this.multipleSelection &&
-        this.multipleSelection.map(item => {
+        this.multipleSelection.map((item) => {
           ids.push(item.ID)
         })
       const res = await deleteXadLicenseByIds({ ids })
       if (res.code === 0) {
         this.$message({
           type: 'success',
-          message: '删除成功'
+          message: '删除成功',
         })
         if (this.tableData.length === ids.length && this.page > 1) {
           this.page--
@@ -207,7 +220,7 @@ export default {
       if (res.code === 0) {
         this.$message({
           type: 'success',
-          message: '删除成功'
+          message: '删除成功',
         })
         if (this.tableData.length === 1 && this.page > 1) {
           this.page--
@@ -231,19 +244,19 @@ export default {
       if (res.code === 0) {
         this.$message({
           type: 'success',
-          message: '创建/更改成功'
+          message: '创建/更改成功',
         })
         this.closeDialog()
         this.getTableData()
       }
     },
     openDialog() {
-      this.type = 'create'
-      this.dialogFormVisible = true
-    }
+      // this.type = 'create'
+      // this.dialogFormVisible = true
+      this.$router.push({ name: 'xadLicenseForm' })
+    },
   },
 }
 </script>
 
-<style>
-</style>
+<style></style>

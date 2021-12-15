@@ -24,11 +24,7 @@
 </template>
 
 <script>
-import {
-  createXadCustomer,
-  updateXadCustomer,
-  findXadCustomer
-} from '@/api/xadCustomer' //  此处请自行替换地址
+import { createXadCustomer, updateXadCustomer, findXadCustomer } from '@/api/xadCustomer' //  此处请自行替换地址
 import infoList from '@/mixins/infoList'
 export default {
   name: 'XadCustomer',
@@ -41,7 +37,7 @@ export default {
         address: '',
         emsCode: 0,
         createUser: '',
-      }
+      },
     }
   },
   async created() {
@@ -73,16 +69,15 @@ export default {
       if (res.code === 0) {
         this.$message({
           type: 'success',
-          message: '创建/更改成功'
+          message: '创建/更改成功',
         })
       }
     },
     back() {
       this.$router.go(-1)
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style>
-</style>
+<style></style>

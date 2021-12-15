@@ -13,7 +13,7 @@ export const user = {
       authority: {},
       sideMode: 'dark',
       activeColor: '#4D70FF',
-      baseColor: '#fff'
+      baseColor: '#fff',
     },
     token: '',
   },
@@ -40,9 +40,7 @@ export const user = {
       window.location.reload()
     },
     ResetUserInfo(state, userInfo = {}) {
-      state.userInfo = { ...state.userInfo,
-        ...userInfo
-      }
+      state.userInfo = { ...state.userInfo, ...userInfo }
     },
     ChangeSideMode: (state, val) => {
       state.userInfo.sideMode = val
@@ -63,7 +61,7 @@ export const user = {
         commit('setToken', res.data.token)
         await dispatch('router/SetAsyncRouter', {}, { root: true })
         const asyncRouters = rootGetters['router/asyncRouters']
-        asyncRouters.forEach(asyncRouter => {
+        asyncRouters.forEach((asyncRouter) => {
           router.addRoute(asyncRouter)
         })
         // const redirect = router.history.current.query.redirect
@@ -88,7 +86,7 @@ export const user = {
         commit('ChangeSideMode', data)
         ElMessage({
           type: 'success',
-          message: '设置成功'
+          message: '设置成功',
         })
       }
     },
@@ -126,6 +124,6 @@ export const user = {
         return '#4D70FF'
       }
       return state.userInfo.activeColor
-    }
-  }
+    },
+  },
 }

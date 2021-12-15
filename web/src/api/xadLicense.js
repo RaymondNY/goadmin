@@ -8,11 +8,14 @@ import service from '@/utils/request'
 // @Param data body model.XadLicense true "创建XadLicense"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /xadLicense/createXadLicense [post]
-export const createXadLicense = (data) => {
+export const createXadLicense = (data, testurl) => {
   return service({
     url: '/xadLicense/createXadLicense',
     method: 'post',
     data,
+    params: {
+      testurl: testurl,
+    },
   })
 }
 
@@ -99,6 +102,14 @@ export const getXadLicenseList = (params) => {
 export const getMachineCode = (params) => {
   return service({
     url: '/xadLicense/getMachineCode',
+    method: 'get',
+    params: { test: params },
+  })
+}
+
+export const getProductList = (params) => {
+  return service({
+    url: '/xadLicense/getProductList',
     method: 'get',
     params,
   })
