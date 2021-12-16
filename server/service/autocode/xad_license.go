@@ -65,20 +65,7 @@ func (xadLicenseService *XadLicenseService) CreateXadLicense(xadLicense *autocod
 		l.UserParam.OnceTask = xadTemplate.OnceTask
 		l.UserParam.UserConcurrencyPer = xadTemplate.UserConcurrencyPer
 		l.UserParam.ConcurrencyModel = xadTemplate.ConcurrencyModel
-		//l.SystemParam.UserNum = 1
-		//l.SystemParam.Validtime = 1
-		//l.SystemParam.ConcurrentUsers = 1
-		//l.SystemParam.Model = 1
-		//l.SystemParam.Watermark = true
-		//l.SystemParam.UserInfo = "1"
-		//l.SystemParam.Code = "12"
-		//l.SystemParam.Product = 5
-		//l.SystemParam.MinVersion = "1"
-		//l.UserParam.ConcurrencyNum = 1
-		//l.UserParam.FunctionModule = "11"
-		//l.UserParam.OnceTask = 4
-		//l.UserParam.UserConcurrencyPer = 12321
-		//l.UserParam.ConcurrencyModel = 12312
+
 		data, _ := json.Marshal(l)
 		//6.license生成
 		p := GenerateLicense(data, strconv.Itoa(int(xadLicense.ID)), gong)
@@ -110,6 +97,34 @@ func (xadLicenseService *XadLicenseService) DeleteXadLicenseByIds(ids request.Id
 // UpdateXadLicense 更新XadLicense记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (xadLicenseService *XadLicenseService) UpdateXadLicense(xadLicense autocode.XadLicense) (err error) {
+	gong := xadLicense.PublicKey
+	temId := xadLicense.TemplateId
+
+	var xadTemplate autocode.XadTemplate
+	xadTemplate.ID = uint(*temId)
+	global.GVA_DB.Where("id = ?", temId).First(&xadTemplate)
+
+	//5.license数据
+	l := License{}
+	l.SystemParam.UserNum = xadTemplate.UserNum
+	l.SystemParam.Validtime = int64(xadTemplate.Validtime)
+	l.SystemParam.ConcurrentUsers = xadTemplate.ConcurrentUsers
+	l.SystemParam.Model = xadTemplate.Model
+	l.SystemParam.Watermark = xadTemplate.Watermark
+	l.SystemParam.UserInfo = xadTemplate.UserInfo
+	l.SystemParam.Code = xadTemplate.Code
+	l.SystemParam.Product = xadTemplate.Product
+	l.SystemParam.MinVersion = xadTemplate.MinVersion
+	l.UserParam.ConcurrencyNum = xadTemplate.ConcurrencyNum
+	l.UserParam.FunctionModule = xadTemplate.FunctionModule
+	l.UserParam.OnceTask = xadTemplate.OnceTask
+	l.UserParam.UserConcurrencyPer = xadTemplate.UserConcurrencyPer
+	l.UserParam.ConcurrencyModel = xadTemplate.ConcurrencyModel
+	data, _ := json.Marshal(l)
+
+	//6.license生成
+	p := GenerateLicense(data, strconv.Itoa(int(xadLicense.ID)), gong)
+	xadLicense.LicenseUrl = p
 	err = global.GVA_DB.Save(&xadLicense).Error
 	return err
 }
